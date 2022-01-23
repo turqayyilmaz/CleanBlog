@@ -17,10 +17,10 @@ app.use(methodOverride('_method', { methods: ['POST', 'GET'] }));
 
 app.set('view engine', 'ejs');
 
-const port = 3000;
+const port = process.env.PORT || 5000;
 
 //DB CONNECT
-mongoose.connect('mongodb://localhost/cleanblog', {
+mongoose.connect('mongodb+srv://turqay:251606@cluster0.2oaay.mongodb.net/CleanBlogDb?retryWrites=true&w=majority', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
