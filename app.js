@@ -1,14 +1,21 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const methodOverride = require('method-override');
+
 const ejs = require('ejs');
 const bp = require('body-parser');
 
 const Post = require('./models/Post');
-
+const postController = require('./controllers/postController');
+const commonController = require('./controllers/commonController');
 const app = express();
 
 app.use(bp.json());
 app.use(bp.urlencoded({ extended: true }));
+app.use(express.static('public'));
+app.use(methodOverride('_method', { methods: ['POST', 'GET'] }));
+
+app.set('view engine', 'ejs');
 
 const port = 3000;
 
@@ -18,35 +25,16 @@ mongoose.connect('mongodb://localhost/cleanblog', {
   useUnifiedTopology: true,
 });
 
-app.set('view engine', 'ejs');
+app.get('/', postController.getAllPost);
+app.get('/post/add', postController.addPostFrm);
+app.post('/post/save', postController.savePost);
+app.get('/post/:id', postController.getPost);
+app.get('/post/:id/edit', postController.editPostFrm);
 
-app.use('/public', express.static('public'));
+app.put('/post/:id/update', postController.editPostSave);
 
-app.get('/', async (req, res) => {
-  const posts = await Post.find({});
-  res.render('index', { posts });
-});
+app.delete('/post/:id/delete', postController.deletePost);
 
-app.get('/about', (req, res) => {
-  res.render('about');
-});
+app.get('/about', commonController.aboutPage);
 
-app.get('/add_post', (req, res) => {
-  res.render('add_post');
-});
-
-app.get('/post/:id', async (req, res) => {
-  let id = req.params.id;
-  let post = await Post.findById(id);
-  console.log(post);
-  res.render('post', { post });
-});
-
-app.post('/posts', async (req, res) => {
-  await Post.create(req.body);
-  res.redirect('/');
-});
-
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
-});
+app.listen(port);

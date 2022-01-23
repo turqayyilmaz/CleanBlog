@@ -5,36 +5,48 @@
   <!-- Navigation -->
 <%- include("partials/_navbar.ejs") %>
 
+
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('/img/post-bg.jpg')">
+  <header class="masthead" style="background-image: url('/img/contact-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
-          <div class="post-heading">
-            <h1><%= post.title %></h1>
-            
-            <span class="meta">Posted by
-              <a href="#"><%= post.owner %></a>
-              on <%= post.dateCreated %></span>
+          <div class="page-heading">
+            <h1>Add New Post</h1>
+
           </div>
         </div>
       </div>
     </div>
   </header>
 
-  <!-- Post Content -->
-  <article>
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 col-md-10 mx-auto">
-          <a href="/post/<%= post._id %>/edit" class="btn btn-success">Edit</a>
-          <a href="/post/<%= post._id %>/delete?_method=DELETE" class="btn btn-danger">Delete</a>
-          <p><%= post.detail %></p>
-        </div>
+  <!-- Main Content -->
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <form method="post" action="/post/<%= post._id %>/update?_method=put"  >
+          <div class="control-group">
+            <div class="form-group floating-label-form-group controls">
+              <label>Post Title</label>
+              <input type="text" class="form-control" placeholder="Post Title" id="title" name="title" required data-validation-required-message="Please enter Post Title." value="<%= post.title %>">
+              <p class="help-block text-danger"></p>
+            </div>
+          </div>
+          <div class="control-group">
+            <div class="form-group floating-label-form-group controls">
+              <label>Post Detail</label>
+              <textarea rows="5" class="form-control" placeholder="Post Detail" id="detail" name="detail" required data-validation-required-message="Please enter Post Detail."><%= post.detail %></textarea>
+              <p class="help-block text-danger"></p>
+            </div>
+          </div>
+          <br>
+          <div id="success"></div>
+          <button type="submit" class="btn btn-primary" id="sendMessageButton">Send</button>
+        </form>
       </div>
     </div>
-  </article>
+  </div>
 
   <hr>
 
@@ -76,7 +88,9 @@
   </footer>
 
   <%- include("partials/_footerJs") %>
-
+    <!-- Contact Form JavaScript -->
+  <script src="/js/jqBootstrapValidation.js"></script>
+  <script src="/js/contact_me.js"></script>
 
 </body>
 
