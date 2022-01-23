@@ -35,11 +35,15 @@ app.get('/add_post', (req, res) => {
   res.render('add_post');
 });
 
+app.get('/post/:id', async (req, res) => {
+  let id = req.params.id;
+  let post = await Post.findById(id);
+  console.log(post);
+  res.render('post', { post });
+});
+
 app.post('/posts', async (req, res) => {
-  console.log(req.body);
-
   await Post.create(req.body);
-
   res.redirect('/');
 });
 
