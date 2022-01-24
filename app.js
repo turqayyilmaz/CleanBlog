@@ -20,7 +20,7 @@ app.set('view engine', 'ejs');
 const port = process.env.PORT || 5000;
 
 //DB CONNECT
-mongoose.connect('mongodb+srv://turqay:251606@cluster0.2oaay.mongodb.net/CleanBlogDb?retryWrites=true&w=majority', {
+mongoose.connect('mongodb+srv://turqay:<password>@cluster0.2oaay.mongodb.net/CleanBlogDb?retryWrites=true&w=majority', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
